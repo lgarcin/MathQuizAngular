@@ -14,9 +14,17 @@
 
 		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<style>
+			body {
+				padding-top: 60px;
+				padding-bottom: 40px;
+			}
+		</style>
+		<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
 		<link rel="stylesheet" href="css/main.css">
-		<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+
+		<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 	</head>
 	<body>
 		<!--[if lt IE 7]>
@@ -24,19 +32,21 @@
 		<![endif]-->
 
 		<div ng-controller="Quiz">
-			<p>
-				{{item.enonce}}
-			</p>
-			<p ng-repeat="reponse in item.reponses">
-				<label>
-					<input type="checkbox" ng-model="reponse.userValue">
-					<span>{{reponse.reponse}}</span> </label>
-			</p>
+			<p ng-bind-html-unsafe="itemList[index].enonce"></p>
+			<form>
+				<ul ng-repeat="reponse in itemList[index].reponses" class="nav nav-pills nav-stacked">
+					<li ng-class="{active: reponse.userValue}">
+						<a href="#"><label>
+							<input type="checkbox" ng-model="reponse.userValue">
+							<span ng-bind-html-unsafe="reponse.reponse"></span> </label></a>
+					</li>
+				</ul>
+			</form>
 			<nav>
 				<button ng-click="previous()" ng-show="index>0">
 					Left
 				</button>
-				<span>{{item.score()}}</span>
+				<span>{{itemList[index].score()}}</span>
 				<span>{{score()}}</span>
 				<button ng-click="next()" ng-show="index<length-1">
 					Right
@@ -49,13 +59,14 @@
 			window.jQuery || document.write('<script src="js/vendor/jquery-1.8.3.min.js"><\/script>')
 		</script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
-		<script src="js/plugins.js"></script>
 		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+		<script src="js/vendor/bootstrap.min.js"></script>
 		<script src="js/main.js"></script>
 
 		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 		<script>
-			var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']]; ( function(d, t) {
+			var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']];
+			( function(d, t) {
 					var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
 					g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
 					s.parentNode.insertBefore(g, s)

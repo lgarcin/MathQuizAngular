@@ -76,27 +76,26 @@ function Quiz($scope, $http) {
 	var self = this;
 	self.fileList = ["Exercices/Exo001.xml", "Exercices/Exo002.xml", "Exercices/Exo003.xml"];
 	$scope.length = self.fileList.length;
-	self.itemList = [];
+	$scope.itemList = [];
 	for (var i in self.fileList) {
 		var item = new Item($http, self.fileList[i]);
-		self.itemList.push(item);
+		$scope.itemList.push(item);
 	}
 	$scope.index = 0;
-	$scope.item = self.itemList[$scope.index];
 	$scope.previous = function() {
 		$scope.index--;
-		$scope.item = self.itemList[$scope.index];
-		MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+		setTimeout(function(){MathJax.Hub.Queue(["Typeset", MathJax.Hub]);},100);
+		//MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
 	}
 	$scope.next = function() {
 		$scope.index++;
-		$scope.item = self.itemList[$scope.index];
-		MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+		setTimeout(function(){MathJax.Hub.Queue(["Typeset", MathJax.Hub]);},100);
+		//MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
 	}
 	$scope.score = function() {
 		var s = 0;
-		for (var i in self.itemList) {
-			s += self.itemList[i].score();
+		for (var i in $scope.itemList) {
+			s += $scope.itemList[i].score();
 		}
 		return s;
 	}
